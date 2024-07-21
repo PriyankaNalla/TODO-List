@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Todo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+<style>
+    body{
+    background-color: #98ddeb;
+    }
+    #cardContainer2{
+display: flex;
+justify-content: center;
+gap:1rem;
+    }
+    .alert-warning{
+        background-color: rgba(240, 109, 109, 0.726);
+        color:brown;
+        font-size: 1.2rem;
+    }
+    .card-body .btn {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+</style>
+</head>
+<body>
+    <div class="alert alert-warning" role="alert">
+       Title is case-sensitive
+      </div>
+      <a href="index.html" class="btn btn-primary btn-lg m-3">Go to Home</a>
+      <a href="create.html" class="btn btn-primary btn-lg m-3">Go to Create</a>
+      <a href="access.html" class="btn btn-primary btn-lg m-3">Go to Access</a>
+      <form>
+        <div class="form-group m-3">
+          <label for="formGroupExampleInput">Enter Title to be deleted: </label>
+          <input type="text" class="form-control title" id="todoTitle" placeholder="Enter Title to be deleted">
+        </div>
+        <button class="btn btn-primary btn-lg m-3" id="delete_button" onclick="Delete()">Delete</button>
+        </form>
+
+      <div class="row m-5" id="cardContainer2" >
+   
+      </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script>        
+     function loadTodos() {
+            let todos = JSON.parse(localStorage.getItem('todos'));
+            if (!Array.isArray(todos)) {
+                todos = [];
+            }
+
+            const cardContainer = document.getElementById('cardContainer2');
+            cardContainer.innerHTML = ''; // Clear previous content
+
+            todos.forEach(todo => {
+                const ihtml = `
+                    <div class="card" style="width: 18rem;">
+                        <img src="https://i.pinimg.com/736x/51/81/9c/51819c0566eb155d5f90f9d4967da4ee.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Title: ${todo.Title}</h5>
+                            <h5 class="card-title">Time: ${todo.Time}</h5>
+                        </div>
+                    </div>`;
+                cardContainer.innerHTML += ihtml;
+            });
+        }
+
+        function deleteTodo() {
+            const titleToDelete = document.getElementById('todoTitle').value;
+
+            if (titleToDelete === '') {
+                alert('Please enter a title');
+                return;
+            }
+
+            let todos = JSON.parse(localStorage.getItem('todos'));
+            if (!Array.isArray(todos)) {
+                todos = [];
+            }
+
+            todos = todos.filter(todo => todo.Title !== titleToDelete);
+            localStorage.setItem('todos', JSON.stringify(todos));
+
+            document.getElementById('todoTitle').value = '';
+            loadTodos();
+        }
+
+        window.addEventListener('load', function() {
+            document.getElementById('todoTitle').value = '';
+            loadTodos();
+        });
+
+        document.getElementById('delete_button').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            deleteTodo();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #98ddeb;
+    }
+    .jumbotron{
+        background-color: transparent;
+        color:blue;
+}
+.display-4{
+    font-size: 4rem;
+    font-weight: 600;
+}
+.lead{
+    font-size: 2rem;
+    font-weight: 300;
+}
+#cardContainer,#cardContainer1{
+    display: flex;
+    justify-content: center;
+    gap:2rem;
+    border-radius: 0.3rem;
+}
